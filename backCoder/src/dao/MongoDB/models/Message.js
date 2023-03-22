@@ -1,19 +1,17 @@
-import { ManagerMongoDB } from "../../../db/gestorMongoDB.js";
-import {Schema} from "mongoose";
+import { ManagerMongoDB } from "../../../db/mongoDBManager.js";
+import { Schema } from "mongoose";
 
-const url = ""
-
-const messageSchema= new Schema({
+const messageSchema = new Schema({
     nombre: String,
-    email:{
+    email: {
         type: String,
         unique: true
     },
     message: String
 })
 
-export class ManagerMessageMongoDB extends ManagerMongoDB{
-    constructor(){
-        super(url, "messages", messageSchema)
+export class ManagerMessageMongoDB extends ManagerMongoDB {
+    constructor() {
+        super(process.env.MONGODBURL, "messages", messageSchema)
     }
 }

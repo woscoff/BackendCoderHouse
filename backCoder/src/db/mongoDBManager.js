@@ -1,64 +1,64 @@
 import mongoose from "mongoose";
 
-export class ManagerMongoDB{
-    #url
-    constructor(url, collection, schema){
-        this.#url = url
+export class ManagerMongoDB {
+
+
+    constructor(url, collection, schema) {
+        this.url = url
         this.collection = collection
-        this. schema = new mongoose.Schema(schema)
+        this.schema = new mongoose.Schema(schema)
         this.model = mongoose.model(this.collection, this.schema)
     }
 
-    async #setConnection(){
+    async setConnection() {
         try {
-            await mongoose.connect(this.#url)
-            console.log("DB is connected");
+            await mongoose.connect(this.url)
         } catch (error) {
             return error
         }
     }
 
-    async addElements(elements){
-        this.#setConnection()
-        try{
+    async addElements(elements) { //Agrego 1 o varios elementos
+        this.setConnection()
+        try {
             return await this.model.insertMany(elements)
-        }catch(error){
+        } catch (error) {
             return error
         }
     }
 
-    async getElements(){
-        this.#setConnection()
-        try{
+    async getElements() {
+        this.setConnection()
+        try {
             return await this.model.find()
-        }catch(error){
+        } catch (error) {
             return error
         }
     }
 
-    async getElementById(id){
-        this.#setConnection()
-        try{
+    async getElementById(id) { //Agrego 1 o varios elementos
+        this.setConnection()
+        try {
             return await this.model.findById(id)
-        }catch(error){
+        } catch (error) {
             return error
         }
     }
 
-    async updateElement(id, info){
-        this.#setConnection()
-        try{
-            return await this.model.findByIdAndUpdate(id, info)
-        }catch(error){
+    async updateElement(id, ...info) {
+        this.setConnection()
+        try {
+            return await this.model.findByIdAndUpdate(id, ...info)
+        } catch (error) {
             return error
         }
     }
 
-    async deleteElement(id){
-        this.#setConnection()
-        try{
+    async deleteElement(id) {
+        this.setConnection()
+        try {
             return await this.model.findByIdAndDelete(id)
-        }catch(error){
+        } catch (error) {
             return error
         }
     }
