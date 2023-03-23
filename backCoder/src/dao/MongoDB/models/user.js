@@ -4,11 +4,11 @@ import { Schema } from "mongoose";
 const userSchema = new Schema({
     first_name: {
         type: String,
-        requered: true
+        required: true
     },
     last_name: {
         type: String,
-        requered: true
+        required: true
     },
     email: {
         type: String,
@@ -17,11 +17,15 @@ const userSchema = new Schema({
     },
     age: {
         type: Number,
-        requered: true
+        required: true
+    },
+    rol:{
+        type: String,
+        default: "User"
     },
     password: {
         type: String,
-        requered: true
+        required: true
     }
 })
 
@@ -39,6 +43,4 @@ export class ManagerUserMongoDB extends ManagerMongoDB {
             return error
         }
     }
-
-
 }
