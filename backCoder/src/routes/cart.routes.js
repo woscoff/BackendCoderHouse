@@ -4,7 +4,7 @@ import { createCarrito, getProductsCart, addProductCart } from '../controllers/c
 const routerCart = Router()
 
 routerCart.get("/:id", getProductsCart)
-routerCart.post("/:id", addProductCart)
+routerCart.post("/:id/products/:id_prod", addProductCart)
 routerCart.put("/:id", createCarrito)
 routerCart.put("/product/:id", createCarrito)
 routerCart.delete("/:id", createCarrito)
