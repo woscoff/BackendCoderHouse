@@ -13,30 +13,22 @@ export const getSession = (req, res) => {
 }
 
 export const testLogin = async (req, res) => {
-    //Consultar datos del formulario de login
-    const { email, password } = req.body
-    console.log(email, password)
     try {
-        const user = await managerUser.getElementByEmail(email)
-
-        if (email == user.email && validatePassword(password, user.password)) {
-
-            req.session.email = user.email
-
-            res.status(200).json({
-                message: "Usuario logueado correctamente"
-            })
-
-        } else {
-            res.status(401).json({
-                message: "Usuario o contraseña no validos"
-            })
+        if (!req.user) {
+            return res.status(401).send({ status: "error", error: "Invalidate User" })
+        }
+        //Genero la session de mi usuario
+        req.session.user = {
+            first_name: req.user.first_name,
+            last_name: req.user.last_name,
+            age: req.user.age,
+            email: req.user.email
         }
 
-
+        res.status(200).send({ status: "success", payload: req.user })
 
     } catch (error) {
-        res.status(500).json({
+        res.status(500).send.json({
             message: error.message
         })
     }
