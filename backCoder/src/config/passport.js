@@ -1,34 +1,13 @@
 import local from 'passport-local'
 import passport from 'passport'
-/* import GitHubStrategy from 'passport-github2' */
+import GitHubStrategy from 'passport-github2'
 import { managerUser } from '../controllers/user.controller.js'
 import { createHash, validatePassword } from '../utils/bcrypt.js'
-import {authToken, generateToken} from '../utils/jwt.js'
-import jwt, { ExtractJwt } from 'passport-jwt'
+
 //Passport se va a manejar como si fuera un middleware 
 const LocalStrategy = local.Strategy //Estretagia local de autenticacion
 //Passport define done como si fuera un res.status()
-
-const JWTStrategy = jwt.Strategy
-const extractJWT = jwt.ExtractJwt
-
 const initializePassport = () => {
-
-    const cookieExtractor= (req) =>{    
-        const token = (req && req.cookies) ? req.cookies('jwtCookies') : null
-
-        return token
-    }
-    passport.use('jwt', new JWTStrategy({
-        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-        secretOrKey: process.env.SIGNED_COOKIE 
-    }, async(jwt_payload, done)=>{
-        try {
-            return done(null, jwt_playload)
-        } catch (error) {
-            return done(error)
-        }
-    }))
     //Ruta a implementar
     passport.use('register', new LocalStrategy(
         { passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
@@ -51,8 +30,7 @@ const initializePassport = () => {
                     age: age,
                     password: passwordHash
                 }])
-                const token = generateToken(userCreated)
-                console.log(token);
+
                 return done(null, userCreated) //Usuario creado correctamente
 
             } catch (error) {
@@ -72,8 +50,6 @@ const initializePassport = () => {
                 return done(null, false)
             }
             if (validatePassword(password, user.password)) { //Usuario y contraseña validos
-                const token = generateToken(user)
-                console.log(token);
                 return done(null, user)
             }
 
@@ -84,7 +60,7 @@ const initializePassport = () => {
         }
     }))
 
-    /* passport.use('github', new GitHubStrategy({
+    passport.use('github', new GitHubStrategy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
         callbackURL: 'http://localhost:4000/authSession/githubSession'
@@ -113,7 +89,7 @@ const initializePassport = () => {
             return done(error)
         }
     }))
- */
+
     //Iniciar la session del usuario
     passport.serializeUser((user, done) => {
         if (Array.isArray(user)) {
