@@ -13,5 +13,8 @@ router.use('/user', routerUser)
 router.use('/api/cart', routerCart)
 router.use('/api/session', routerSession)
 router.use('/authSession', routerGithub)
+router.use('*', (req, res) => {
+    res.status(404).send({ error: "404 No se encuentra la pagina solicitada" })
+})
 
 export default router
