@@ -3,7 +3,7 @@ import passport from 'passport'
 import GitHubStrategy from 'passport-github2'
 import jwt from 'passport-jwt'
 import { managerUser } from '../controllers/user.controller.js'
-import { getManagerCart } from '../dao/daoManager.js'
+import { managerCart } from '../controllers/cart.controller.js'
 import { createHash, validatePassword } from '../utils/bcrypt.js'
 import { authToken, generateToken } from '../utils/jwt.js'
 
@@ -51,13 +51,14 @@ const initializePassport = () => {
                 }
 
                 const passwordHash = createHash(password)
-
+                const carrito = await managerCart.addElements()
                 const userCreated = await managerUser.addElements([{
                     first_name: first_name,
                     last_name: last_name,
                     email: email,
                     age: age,
-                    password: passwordHash
+                    password: passwordHash,
+                    idCart: carrito[0]._id
                 }])
                 const token = generateToken(userCreated)
                 console.log(token)

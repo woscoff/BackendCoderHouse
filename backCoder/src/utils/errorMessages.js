@@ -18,16 +18,26 @@ export const passportError = (strategy) => {
     }
 }
 
-export const roleVerification = (role) => {
+export const roleVerification = (roles) => {
+    let bandera = 0
     return async (req, res, next) => {
         const userAccess = req.user.user[0]
         if (!req.user) {
             return res.status(401).send({ error: "User no autorizado" })
         }
+        console.log(userAccess.rol)
+        roles.forEach(rolEnviado => {
+            if (userAccess.rol != rolEnviado) { //El user no tiene el rol necesario a esta ruta y a este rol
+                bandera = 1
+            } else {
+                bandera = 0
+            }
+        });
 
-        if (userAccess.rol != role) { //El user no tiene el rol necesario a esta ruta y a este rol
+        if (bandera == 1) {
             return res.status(401).send({ error: "User no posee los permisos necesarios" })
         }
+
 
         next()
 

@@ -26,6 +26,10 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    idCart: {
+        type: Schema.Types.ObjectId,
+        ref: 'carts'
     }
 })
 
@@ -43,4 +47,6 @@ export class ManagerUserMongoDB extends ManagerMongoDB {
             return error
         }
     }
+
+
 }
