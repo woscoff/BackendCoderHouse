@@ -73,3 +73,24 @@ export const registerUser = async (req, res) => {
     }
 
 }
+
+export const getSession = (req, res) => {
+    if (req.session.login) { //Si la sesion esta activa en la BDD
+        res.redirect('/product', 200, {
+            'message': "Bienvenido/a a mi tienda"
+        })
+    }
+    //No esta activa la sesion
+    res.redirect('/api/session/login', 500, {
+        //Mensaje de logueo
+    })
+}
+
+export const destroySession = (req, res) => {
+    if (req.session.login) {
+        req.session.destroy()
+    }
+    res.redirect('/product', 200, {
+        'divMessage': "Hola"
+    })
+}

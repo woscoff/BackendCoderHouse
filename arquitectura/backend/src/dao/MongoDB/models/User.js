@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { ManagerMongoDB } from "../db/mongoDBManager.js";
 
 const userSchema = new Schema({
     first_name: {
@@ -27,4 +28,21 @@ const userSchema = new Schema({
 
 const userModel = model("Users", userSchema)
 
+export class ManagerUserMongoDB extends ManagerMongoDB {
+    constructor() {
+        super(process.env.MONGODBURL, "users", userSchema)
+
+    }
+
+    async getElementByEmail(email) {
+        super.setConnection()
+        try {
+            return await this.model.findOne({ email: email })
+        } catch (error) {
+            return error
+        }
+    }
+
+
+}
 export default userModel
