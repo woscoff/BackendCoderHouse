@@ -3,6 +3,7 @@ import { destroySession } from "../controllers/session.controller.js";
 import passport from "passport";
 import { passportError, roleVerification } from "../utils/errorMessages.js";
 import { loginUser } from "../controllers/session.controller.js";
+import { checkSessionRole, isSessionActive } from "../config/middlewares.js";
 const routerSession = Router()
 
 

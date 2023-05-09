@@ -1,17 +1,25 @@
-import { ManagerMongoDB } from "../db/mongoDBManager.js";
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const messageSchema = new Schema({
-    nombre: String,
+    name: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
-        unique: true
+        required: true,
     },
-    message: String
+    message: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
 })
 
-export class ManagerMessageMongoDB extends ManagerMongoDB {
-    constructor() {
-        super(process.env.MONGODBURL, "messages", messageSchema)
-    }
-}
+
+const messageModel = model('Messages', messageSchema);
+
+export default messageModel

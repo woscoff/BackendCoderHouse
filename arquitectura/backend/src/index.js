@@ -14,6 +14,10 @@ import routerUser from './routes/user.routes.js'
 import routerSession from './routes/session.routes.js'
 import initializePassport from './config/passport.js'
 import cors from 'cors'
+import { Server } from 'socket.io'
+import { read } from 'fs'
+import { readMessages, createMessage } from './services/MessageService.js'
+
 
 const whiteList = ['http://localhost:3000'] //Rutas validas a mi servidor
 
@@ -79,3 +83,23 @@ app.listen(4000, () => {
     console.log(`Server on port 4000`)
 })
 
+/* const server = app.listen(app.get("port"), ()=> console.log(`Server on port ${app.get("port")}`)) */
+
+export const io = new Server();
+
+io.on("connection", async (socket) => {
+    console.log("Chat client online");
+
+    socket.on("message", async newMessage => {
+        await createMessage([newMessage]);
+        const messages = await readMessages();
+        console.log(messages)
+        socket.emit("allMessages", messages)
+    })
+
+    socket.on("load messages", async () => {
+        const messages = await readMessages()
+        console.log(messages)
+        socket.emit("allMessages", messages)
+    })
+})
