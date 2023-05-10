@@ -15,7 +15,7 @@ import routerSession from './routes/session.routes.js'
 import initializePassport from './config/passport.js'
 import cors from 'cors'
 import { Server } from 'socket.io'
-import { read } from 'fs'
+import mongoose from 'mongoose'
 import { readMessages, createMessage } from './services/MessageService.js'
 
 
@@ -37,15 +37,22 @@ app.use(express.json())
 app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: true }))
 app.use(session({
-    store: MongoStore.create({
+    store: new MongoStore({
         mongoUrl: process.env.MONGODBURL,
-        mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
         ttl: 210
     }),
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true
+    secret: '1234coder',
+    resave: false,
+    saveUninitialized: false
 }))
+
+mongoose.connect(process.env.MONGODBURL)
+.then(() => {
+console.log("Conectado con exito a la base de datos");
+})
+.catch((error) => {
+console.log(error);
+})
 
 /* const connectionMongoose = async () => {
     await mongoose.connect(process.env.MONGODBURL, {
@@ -103,3 +110,4 @@ io.on("connection", async (socket) => {
         socket.emit("allMessages", messages)
     })
 })
+
