@@ -72,6 +72,72 @@ const initializePassport = () => {
 
     ))
 
+    /* passport.use("register",
+    new LocalStrategy({ passReqToCallback: true, usernameField: "email" }, async (req, username, password, done) => {
+        const { first_name, last_name, email } = req.body;
+
+        try {
+            const user = await findUserByEmail(username); // username <=> email
+            if (user) {
+                return done(null, false); // null: no errores - false: no se creo el user
+            } else {
+                const hashPassword = createHash(password);
+                const newCart = await createCart()
+
+                const createdUser = await createUser({
+                    first_name: first_name,
+                    last_name: last_name,
+                    email: email,
+                    password: hashPassword,
+                    role: "user",
+                    cart_id: newCart._id
+                });
+
+                return done(null, createdUser);
+            }
+        } catch (error) {
+            return done(error);
+        }
+    })
+); */
+
+/* passport.use("login",
+        new LocalStrategy({ usernameField: "email" }, async (username, password, done) => {
+            try {
+                if (username === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+                    // ADMIN LOGIN
+                    const user = {
+                        _id: new mongoose.Types.ObjectId(),
+                        first_name: process.env.ADMIN_NAME,
+                        last_name: " ",
+                        email: process.env.ADMIN_EMAIL,
+                        password: " ", // Default password required by Challenge #5
+                        role: "admin",
+                    };
+                    return done(null, user);
+                } else {
+                    // USER LOGIN
+                    const user = await findUserByEmail(username);
+                    console.log(`PASSPORT[login]> user logging-in: ${user.email}`);
+                    if (!user) {
+                        //User not found
+                        console.log(`PASSPORT[login]> User not found`);
+                        return done(null, false);
+                    }
+                    if (validatePassword(password, user.password)) {
+                        //const token = generateToken(user);
+                        console.log(`PASSPORT[login]> User found: ${user}`);
+                        return done(null, user);
+                    }
+                    // Wrong password
+                    console.log("PASSPORT[login]> Wrong credentials");
+                    return done(null, false);
+                }
+            } catch (error) {
+                return done(error);
+            }
+        })
+    ); */
     passport.use('login', new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
 
         try {

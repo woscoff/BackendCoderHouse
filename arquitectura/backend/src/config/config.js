@@ -15,3 +15,4 @@ dotenv.config({
     : './.env.production'
 })
 
+dotenv.config({ path: envFilePath });
