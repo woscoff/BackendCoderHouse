@@ -7,6 +7,8 @@ import routerUser from "./user.routes.js";
 import routerGithub from "./github.routes.js";
 import routerPoliticas from "./politicas.routes.js";
 import routerChat from "./chat.routes.js";
+import { getRandomProducts } from "../utils/mocking/mocking.controller.js";
+
 const router = Router()
 
 router.use('/product', routerProducto)
@@ -19,5 +21,6 @@ router.use('/api/chat', routerChat)
 router.use('*', (req, res) => {
     res.status(404).send({ error: "404 No se encuentra la pagina solicitada" })
 })
+router.get('/mockingproducts', getRandomProducts)
 
 export default router

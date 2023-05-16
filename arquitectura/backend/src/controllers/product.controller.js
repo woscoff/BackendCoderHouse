@@ -1,4 +1,5 @@
 import { getManagerProducts } from "../dao/daoManager.js";
+import CustomError from "../utils/errors/customError.js";
 
 const data = await getManagerProducts()
 const managerProduct = new data.ManagerProductMongoDB
@@ -27,7 +28,7 @@ export const getProducts = async (req, res) => {
     }
 }
 
-export const getProduct = async (req, res) => {
+export const getProduct = async (req, res, next) => {
     const { id } = req.params
 
     try {
@@ -40,9 +41,17 @@ export const getProduct = async (req, res) => {
             message: "Producto no encontrado"
         })
     } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
+        if (error instanceof CustomError) {
+            res.status(400).json({
+                error: error.name,
+                message: error.message,
+            })
+        } else {
+            res.status(500).send({
+                message: `Error creating new products`,
+                error: error.message
+            })
+        }
     }
 }
 
@@ -71,7 +80,7 @@ export const updateProduct = async (req, res) => {
             })
         }
 
-        res.status(200).json({
+        res.status(404).json({
             message: "Producto no encontrado"
         })
 
@@ -89,12 +98,13 @@ export const deleteProduct = async (req, res) => {
         const product = await managerProduct.deleteElement(id)
 
         if (product) {
-            return res.status(200).json({
-                message: "Producto eliminado"
+            return res.status(200).send({
+                status: `success`,
+                message: `Product ${product.title} [CODE: ${product.code}] deleted`
             })
         }
 
-        res.status(200).json({
+        res.status(404).json({
             message: "Producto no encontrado"
         })
     } catch (error) {

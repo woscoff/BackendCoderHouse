@@ -17,7 +17,7 @@ import cors from 'cors'
 import { Server } from 'socket.io'
 import mongoose from 'mongoose'
 import { readMessages, createMessage } from './services/MessageService.js'
-
+import { errorHandler } from './middlewares/errorHandler.js'
 
 const whiteList = ['http://localhost:3000'] //Rutas validas a mi servidor
 
@@ -69,9 +69,9 @@ app.use(passport.initialize())
 initializePassport(passport)
 app.use('/users', routerUser)
 app.use('/auth', routerSession)
-app.engine("handlebars", engine())
-app.set("view engine", "handlebars")
-app.set("views", path.resolve(__dirname, "./views"))
+app.use('/', router)
+app.use('/', express.static(__dirname + '/public'))
+app.use(errorHandler)
 
 app.set("port", process.env.PORT || 5000)
 

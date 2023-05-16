@@ -4,9 +4,9 @@ import { checkSessionRole } from "../config/middlewares.js";
 
 const routerCart = Router()
 
+routerCart.use(checkRole("user"))
 routerCart.get("/:id", getProductsCart)
 routerCart.post("/:id", addProductCart)
-routerCart.get('/:id', checkSessionRole("User"), getProductsCart)
 
 routerCart.get("/:id", getProductsCart)
 routerCart.post("/:id/products/:id_prod", addProductCart)
