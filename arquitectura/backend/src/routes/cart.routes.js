@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getProductsCart, addProductCart, updateProductCart, deleteProductCart } from '../controllers/cart.controller.js'
-import { checkSessionRole } from "../config/middlewares.js";
+import { getProductsCart, addProductCart, updateProductCart, createNewCart, deleteProductCart } from '../controllers/cart.controller.js'
+import { checkSessionRole, checkRole } from "../config/middlewares.js";
 
 const routerCart = Router()
 
@@ -14,7 +14,7 @@ routerCart.put("/:id", updateProductCart)
 routerCart.put("/:id/product/:id_prod", updateProductCart)
 routerCart.delete("/:id", deleteProductCart)
 routerCart.delete("/:id/product/:id_prod", deleteProductCart)
-//routerCart.post("/", createCarrito)
+routerCart.post("/", createNewCart)
 
 
 export default routerCart

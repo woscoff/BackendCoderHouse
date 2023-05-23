@@ -22,6 +22,28 @@ export const getProductsCart = async (req, res) => {
         })
     }
 }
+
+export const createNewCart = async (req, res) => {
+    try {
+        req.logger.http(`POST on /api/carts`)
+        const newCart = {}
+        const data = await createCart(newCart)
+
+        res.send({
+            status: "success",
+            payload: data
+        })
+        console.log(data)
+    } catch (error) {
+        res.send({
+            status: "error",
+            payload: error.message
+        })
+        req.logger.error(error.message)
+        //console.log(error)
+    }
+}
+
 /*
 export const getProduct = async (req, res) => {
     const { id } = req.params

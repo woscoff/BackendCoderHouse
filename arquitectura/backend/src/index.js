@@ -18,6 +18,7 @@ import { Server } from 'socket.io'
 import mongoose from 'mongoose'
 import { readMessages, createMessage } from './services/MessageService.js'
 import { errorHandler } from './middlewares/errorHandler.js'
+import { log, middlewareLogger } from './middlewares/logger.js'
 
 const whiteList = ['http://localhost:3000'] //Rutas validas a mi servidor
 
@@ -34,6 +35,7 @@ const corsOptions = { //Reviso si el cliente que intenta ingresar a mi servidor 
 const app = express()
 
 app.use(express.json())
+app.use(middlewareLogger)
 app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: true }))
 app.use(session({
@@ -86,8 +88,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-app.listen(4000, () => {
-    console.log(`Server on port 4000`)
+const server = app.listen(app.get("port"), () => {
+    log('info', `Server running on http://localhost:${app.get("port")}`)
 })
 
 /* const server = app.listen(app.get("port"), ()=> console.log(`Server on port ${app.get("port")}`)) */

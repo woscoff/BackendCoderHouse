@@ -7,7 +7,11 @@ export const loginUser = async (req, res, next) => {
     try {
         passport.authenticate('jwt', { session: false }, async (err, user, info) => {
             if (err) {
-                return res.status(401).send("Error en consulta de token")
+                req.logger.error(`Error en el login - ${err.message}`)
+                return res.status(401).send({
+                    message: `Error on login`,
+                    error: err.message
+                })
             }
 
             if (!user) {
@@ -30,8 +34,9 @@ export const loginUser = async (req, res, next) => {
                 res.cookie('jwt', token, { httpOnly: true })
                 return res.status(200).json({ token })
             } else {
+
                 //El token existe, asi que lo valido
-                console.log("Pase?")
+                req.logger.info(`Usuario logeado en < ${req.session.user.email} >`)
                 const token = req.cookies.jwt;
                 jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
                     if (err) {
@@ -48,7 +53,11 @@ export const loginUser = async (req, res, next) => {
 
         })(req, res, next)
     } catch (error) {
-        res.status(500).send(`Ocurrio un error en Session, ${error}`)
+        req.logger.error(`Error en el Inicio de Sesion - ${error.message}`)
+        res.status(500).send({
+            message: "Server internal error",
+            error: error.message
+        })
     }
 }
 export const registerUser = async (req, res) => {
@@ -61,7 +70,7 @@ export const registerUser = async (req, res) => {
         } else {
             const hashPassword = createHash(password)
             const newUser = await createUser({ first_name, last_name, email, age, user, password: hashPassword })
-            console.log(newUser)
+            req.logger.info(`Usuario ${req.user.email} registrado`)
             const token = jwt.sign({ user: { id: newUser._id } }, process.env.JWT_SECRET);
             res.cookie('jwt', token, { httpOnly: true });
             res.status(201).json({ token });
@@ -69,7 +78,7 @@ export const registerUser = async (req, res) => {
 
 
     } catch (error) {
-        res.status(500).send(`Ocurrio un error en Registro User, ${error}`)
+        req.logger.error(`Error en el registro - ${error.message}`)
     }
 
 }
@@ -89,6 +98,9 @@ export const getSession = (req, res) => {
 export const destroySession = (req, res) => {
     if (req.session.login) {
         req.session.destroy()
+        req.logger.info(`${username} cerró sesion.`)
+    }else{
+        req.logger.debug('Sesion no activa')
     }
     res.redirect('/product', 200, {
         'divMessage': "Hola"

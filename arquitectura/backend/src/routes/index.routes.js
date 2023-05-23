@@ -8,8 +8,11 @@ import routerGithub from "./github.routes.js";
 import routerPoliticas from "./politicas.routes.js";
 import routerChat from "./chat.routes.js";
 import { getRandomProducts } from "../utils/mocking/mocking.controller.js";
+import { logRequest } from "../middlewares/logger.js";
 
 const router = Router()
+
+router.use(logRequest)
 
 router.use('/product', routerProducto)
 router.use('/user', routerUser)
