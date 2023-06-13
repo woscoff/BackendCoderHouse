@@ -2,13 +2,20 @@ import { ManagerMongoDB } from "../db/mongoDBManager.js";
 import { Schema } from "mongoose";
 
 const cartSchema = new Schema({
-    products: [{
-        id_prod: {
-            type: Schema.Types.ObjectId,
-            ref: 'products'
-        },
-        quantity: Number
-    }]
+    products: {
+        type: [{
+            productId: {
+                type: Schema.Types.ObjectId,
+                ref: 'products',
+                required: true
+            },
+            quantity: {
+                type: Number,
+                default: 1
+            }
+        }],
+        default: []
+    }
 })
 
 

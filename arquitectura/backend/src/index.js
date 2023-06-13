@@ -19,6 +19,8 @@ import mongoose from 'mongoose'
 import { readMessages, createMessage } from './services/MessageService.js'
 import { errorHandler } from './middlewares/errorHandler.js'
 import { log, middlewareLogger } from './middlewares/logger.js'
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express';
 
 const whiteList = ['http://localhost:3000'] //Rutas validas a mi servidor
 
@@ -34,6 +36,21 @@ const corsOptions = { //Reviso si el cliente que intenta ingresar a mi servidor 
 
 const app = express()
 
+const swaggerOpts = {
+    definition: {
+      openapi: '3.0.1',
+      info: {
+        title: "Natufriend - API documentation",
+        description: "Description of the APIRest"
+      }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+  }
+  const specs = swaggerJSDoc(swaggerOpts)
+  app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
+
+
+
 app.use(express.json())
 app.use(middlewareLogger)
 app.use(cors(corsOptions))
@@ -48,12 +65,16 @@ app.use(session({
     saveUninitialized: false
 }))
 
+
+
+
+
 mongoose.connect(process.env.MONGODBURL)
 .then(() => {
-console.log("Conectado con exito a la base de datos");
+    console.log("Conectado con exito a la base de datos");
 })
 .catch((error) => {
-console.log(error);
+    console.log(error);
 })
 
 /* const connectionMongoose = async () => {
@@ -85,6 +106,12 @@ const storage = multer.diskStorage({
         cb(null, `${Date.now()}${file.originalname}`)
     }
 })
+
+
+
+
+
+
 
 const upload = multer({ storage: storage })
 
