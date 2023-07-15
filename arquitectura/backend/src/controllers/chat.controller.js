@@ -1,10 +1,10 @@
-import { io } from "../index.js"
-import { readMessages, createMessage } from "../services/MessageService.js"
+import { chatServer } from "../index.js"
+import { createMessage, readMessages } from "../services/messageServices.js"
 
 export const getMessages = async (req, res) => {
     try {
         const messages = await readMessages()
-        console.log(messages)
+        req.logger.http(`Get all chat msgs requested via API`)
 
         res.status(200).json({
             messages: messages
@@ -23,22 +23,20 @@ export const sendMessage = async (req, res) => {
     const { first_name, last_name, email } = req.session.user
 
     try {
-        await createMessage({
+        const sentMessage = await createMessage({
             name: `${first_name} ${last_name}`,
             email,
             message
         })
         const messages = await readMessages()
-        io.emit(messages)
+        chatServer.emit("message", messages)
 
         res.status(200).send({
-            message: "Mensaje enviado",
-        });
+            message: `Message sent`,
+            payload: sentMessage.message
+        })
 
     } catch (error) {
-        res.status(500).send({
-            message: "Internal server error.",
-            error: error.message
-        });
+
     }
 }

@@ -1,4 +1,4 @@
-import { ManagerMongoDB } from "../db/mongoDBManager.js";
+/* import { ManagerMongoDB } from "../db/mongoDBManager.js";
 import { Schema } from "mongoose";
 
 const cartSchema = new Schema({
@@ -19,8 +19,6 @@ const cartSchema = new Schema({
 })
 
 
-/* const cartModel = model("Carts", cartSchema)
-export default cartModel */
 
 export class ManagerCartMongoDB extends ManagerMongoDB {
     constructor() {
@@ -74,4 +72,27 @@ export class ManagerCartMongoDB extends ManagerMongoDB {
         return true
     }
 
-}
+} */
+
+import { Schema, model } from "mongoose";
+
+const cartSchema = new Schema({
+    products: {
+        type: [{
+            productId: {
+                type: Schema.Types.ObjectId,
+                ref: 'products',
+                required: true
+            },
+            quantity: {
+                type: Number,
+                default: 1
+            }
+        }],
+        default: []
+    }
+})
+
+const cartModel = model("carts", cartSchema)
+
+export default cartModel

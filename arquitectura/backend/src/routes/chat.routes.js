@@ -1,4 +1,4 @@
-import { Router } from "express"
+/* import { Router } from "express"
 import { checkSessionRole, isSessionActive } from "../config/middlewares.js"
 import { getMessages, sendMessage } from "../controllers/chat.controller.js"
 
@@ -7,4 +7,13 @@ const routerChat = Router()
 routerChat.get('/', isSessionActive, getMessages)
 routerChat.post('/', checkSessionRole("User"), sendMessage)
 
-export default routerChat
+export default routerChat */
+
+import { Router } from "express"
+import { checkRole, isSessionActive } from "../middlewares/session.js"
+import { getMessages, sendMessage } from "../controllers/chat.controller.js"
+
+export const routerChat = Router()
+
+routerChat.get('/', isSessionActive, getMessages)
+routerChat.post('/', checkRole("user"), sendMessage)

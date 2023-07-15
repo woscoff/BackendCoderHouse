@@ -1,4 +1,4 @@
-import { findUsers } from "../services/UserService.js"
+/* import { findUsers } from "../services/userServices.js"
 import { getManagerUsers } from "../dao/daoManager.js";
 
 export const getUsers = async (req, res) => {
@@ -18,3 +18,16 @@ export const managerUser = new data.ManagerUserMongoDB
 export const createUser = async (req, res) => {
     res.send({ status: "success", message: "User Created" })
 }
+ */
+
+import { findUsers } from "../services/userServices.js";
+
+export const getUsers = async (req, res) => {
+    try {
+        const users = await findUsers()
+        res.status(200).send(users)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+}
+
