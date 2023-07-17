@@ -56,39 +56,41 @@ app.use(express.json())
 app.use(middlewareLogger)
 //app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser(process.env.JWT_SECRET))
 app.use(session({
     store: new MongoStore({
         mongoUrl: process.env.MONGODBURL,
+        mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
         ttl: 210
     }),
     secret: '1234coder',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    rolling: false
 }))
 
 
 
 
 
-mongoose.connect(process.env.MONGODBURL)
-.then(() => {
-    console.log("Conectado con exito a la base de datos");
-})
-.catch((error) => {
-    console.log(error);
-})
+// mongoose.connect(process.env.MONGODBURL)
+// .then(() => {
+//     console.log("Conectado con exito a la base de datos");
+// })
+// .catch((error) => {
+//     console.log(error);
+// })
 
 
 initializePassport()
-app.use(cookieParser(process.env.JWT_SECRET))
 app.use(passport.initialize())
 app.use(passport.session())
 //initializePassport(passport)
-/* app.use('/users', routerUser)
-app.use('/auth', routerSession)
-app.use('/', router)
-app.use('/', express.static(__dirname + '/public'))
-app.use(errorHandler) */
+//app.use('/user', routerSession);
+//app.use('/auth', routerSession)
+//app.use('/', router)
+//app.use('/', express.static(__dirname + '/public'))
+//app.use(errorHandler)
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
@@ -116,9 +118,6 @@ app.use('/', express.static(__dirname + '/public'))
 
 //const upload = multer({ storage: storage })
 
-const server = app.listen(app.get("port"), () => {
-    log('info', `Server running on http://localhost:${app.get("port")}`);
-})
 
 
 
@@ -156,6 +155,22 @@ io.on("connection", async (socket) => {
         socket.emit("allMessages", messages)
     })
 })
+
+const connectToMongoDB = async () => {
+  await mongoose.connect(process.env.MONGODBURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+    .catch(error => log('error', error.message))
+  log('info', `Database connected`)
+}
+
+connectToMongoDB()
+
+const server = app.listen(app.get("port"), () => {
+  log('info', `Server running on http://localhost:${app.get("port")}`);
+})
+
 
 export const chatServer = new SocketServer(server)
 log('info', `Chat server online`)
