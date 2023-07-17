@@ -83,10 +83,10 @@ app.use(session({
 
 
 initializePassport()
-app.use(passport.initialize())
-app.use(passport.session())
+ app.use(passport.initialize())
+app.use(passport.session()) 
 //initializePassport(passport)
-//app.use('/user', routerSession);
+app.use('/user', routerSession);
 //app.use('/auth', routerSession)
 //app.use('/', router)
 //app.use('/', express.static(__dirname + '/public'))

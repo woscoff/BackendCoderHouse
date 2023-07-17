@@ -121,6 +121,7 @@ import GitHubStrategy from "passport-github2";
 import { createUser, findUserByEmail, findUserById } from "../services/userServices.js";
 import { createCart } from "../services/cartServices.js";
 import { createHash, validatePassword } from "../utils/bcrypt.js";
+import { Roles } from "../middlewares/session.js";
 
 const LocalStrategy = local.Strategy;
 
@@ -143,7 +144,7 @@ const initializePassport = () => {
             last_name: last_name,
             email: email,
             password: hashPassword,
-            role: "user",
+            role: Roles.USER,
             cart_id: newCart._id
           });
 
@@ -166,7 +167,7 @@ const initializePassport = () => {
             last_name: " ",
             email: process.env.ADMIN_EMAIL,
             password: " ", // Default password required by Challenge #5
-            role: "admin",
+            role: Roles.ADMIN,
           };
           return done(null, user);
         }
