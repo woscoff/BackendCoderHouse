@@ -167,7 +167,7 @@ const initializePassport = () => {
             last_name: " ",
             email: process.env.ADMIN_EMAIL,
             password: " ", // Default password required by Challenge #5
-            role: Roles.ADMIN,
+            role: Roles.ADMIN
           };
           return done(null, user);
         }
