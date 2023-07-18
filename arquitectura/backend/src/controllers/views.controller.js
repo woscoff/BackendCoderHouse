@@ -2,8 +2,8 @@
 
 import { Roles } from "../middlewares/session.js"
 
-const PRODUCTS_URL = 'http://localhost:8080/api/products'
-const CARTS_URL = 'http://localhost:8080/api/carts'
+const PRODUCTS_URL = 'http://localhost:4000/api/products'
+const CARTS_URL = 'http://localhost:4000/api/carts'
 
 export const viewLogin = async (req, res, next) => {
 

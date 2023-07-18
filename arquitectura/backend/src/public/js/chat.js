@@ -9,7 +9,7 @@ const messageText = document.getElementById("senderText")
 const sendButton = document.getElementById("sendButton")
 const chatBox = document.getElementById("chatBox")
 
-const SESSION_URL = 'http://localhost:8080/api/session/current'
+const SESSION_URL = 'http://localhost:4000/api/session/current'
 let sessionName, sessionEmail, sessionRole
 
 window.addEventListener("load", async () => {
