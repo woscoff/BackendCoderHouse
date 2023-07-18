@@ -101,14 +101,14 @@ app.set("port", process.env.PORT)
 app.use('/', router)
 app.use('/', express.static(__dirname + '/public'))
 
-/* const storage = multer.diskStorage({
+const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'src/public/img')
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}${file.originalname}`)
     }
-}) */
+})
 
 
 
@@ -116,7 +116,7 @@ app.use('/', express.static(__dirname + '/public'))
 
 
 
-//const upload = multer({ storage: storage })
+const upload = multer({ storage: storage })
 
 
 

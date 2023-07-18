@@ -1,12 +1,12 @@
 {{>navbar}}
+<div class="content">
 <h2>Productos en venta</h2>
 <div class="container categories">
 	<span>Categorías:</span>
-	<a href="?">Todo</a>
-	<a href="?category=Juguetes">Juguetes</a>
-	<a href="?category=Accesorios">Accesorios</a>
-	<a href="?category=Alimento">Alimento</a>
-	<a href="?category=Sanitarios">Sanitarios</a>
+	<a href="?" class="link">Todo</a>
+	<a href="?category=Remeras" class="link">Remeras</a>
+	<a href="?category=Pantalones" class="link">Pantalones</a>
+	<a href="?category=Zapatillas" class="link">Zapatillas</a>
 </div>
 <div class="container items-per-page"></div>
 {{#if statusBool}}
@@ -43,3 +43,4 @@
 </div>
 {{/if}}
 <script src="js/products.js"></script>
+</div>

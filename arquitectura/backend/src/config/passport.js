@@ -193,40 +193,40 @@ const initializePassport = () => {
     })
   );
 
-  passport.use("github", new GitHubStrategy(
-    {
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:4000/authSession/githubSession",
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        const user = await findUserByEmail(profile._json.email);
+  // passport.use("github", new GitHubStrategy(
+  //   {
+  //     clientID: process.env.CLIENT_ID,
+  //     clientSecret: process.env.CLIENT_SECRET,
+  //     callbackURL: "http://localhost:4000/authSession/githubSession",
+  //   },
+  //   async (accessToken, refreshToken, profile, done) => {
+  //     try {
+  //       const user = await findUserByEmail(profile._json.email);
 
-        if (user) {
-          done(null, user);
-        } else {
-          log('info', "New Github user created");
+  //       if (user) {
+  //         done(null, user);
+  //       } else {
+  //         log('info', "New Github user created");
 
-          const newCart = await createCart()
+  //         const newCart = await createCart()
 
-          const createdUser = await createUser({
-            first_name: profile._json.name,
-            last_name: " ",
-            email: profile._json.email,
-            password: " ", // Default password required by Challenge #5
-            role: "user",
-            cart_id: newCart[0]._id
-          });
+  //         const createdUser = await createUser({
+  //           first_name: profile._json.name,
+  //           last_name: " ",
+  //           email: profile._json.email,
+  //           password: " ", // Default password required by Challenge #5
+  //           role: "user",
+  //           cart_id: newCart[0]._id
+  //         });
 
-          done(null, createdUser);
-        }
-      } catch (error) {
-        return done(error);
-      }
-    }
-  )
-  );
+  //         done(null, createdUser);
+  //       }
+  //     } catch (error) {
+  //       return done(error);
+  //     }
+  //   }
+  // )
+  // );
 
   // Iniciar sesión
   passport.serializeUser((user, done) => {

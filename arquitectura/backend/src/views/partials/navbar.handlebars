@@ -1,4 +1,4 @@
-<nav class='navbar'>
+{{!-- <nav class='navbar'>
     <div class='navbar-brand'>
         <a href='/' class='navbar-item'>
             <h1 class='title'>ecommerce</h1>
@@ -16,4 +16,24 @@
             <a href='/api/session/logout'><button class='btn btn-danger'>Logout</button></a>
         </div>
     {{/if}}
+</nav> --}}
+
+<nav class='navbar navbar-dark bg-dark'>
+    <div class='container'>
+        <a href='/' class='navbar-brand'>
+            <h1 class='title'>ecommerce</h1>
+        </a>
+
+        {{#if user}}
+        <div class='navbar-text'>
+            Bienvenidx
+            <b>{{user.name}}</b>. Tu rol es {{user.role}}
+        </div>
+        <div class='navbar-actions'>
+            <a href='/chat' class='btn btn-primary mr-2'>Ir al chat</a>
+            <a href='/products' class='btn btn-primary mr-2'>Ir a la tienda</a>
+            <a href='/api/session/logout' class='btn btn-danger'>Logout</a>
+        </div>
+        {{/if}}
+    </div>
 </nav>
