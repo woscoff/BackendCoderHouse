@@ -9,11 +9,11 @@ routerChat.post('/', checkSessionRole("User"), sendMessage)
 
 export default routerChat */
 
-import { Router } from "express"
+/* import { Router } from "express"
 import { checkRole, isSessionActive } from "../middlewares/session.js"
 import { getMessages, sendMessage } from "../controllers/chat.controller.js"
 
 export const routerChat = Router()
 
 routerChat.get('/', isSessionActive, getMessages)
-routerChat.post('/', checkRole("user"), sendMessage)
+routerChat.post('/', checkRole("user"), sendMessage) */

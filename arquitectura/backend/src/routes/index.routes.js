@@ -36,7 +36,7 @@ import routerSession from "./sessions.routes.js"
 import routerUser from "./users.routes.js"
 import routerViews from "./views.routes.js"
 import routerGithub from "./github.routes.js"
-import { routerChat } from "./chat.routes.js"
+//import { routerChat } from "./chat.routes.js"
 import { getRandomProducts } from "../utils/mocking/mocking.controller.js"
 import { logRequest } from "../middlewares/logger.js"
 
@@ -49,7 +49,7 @@ router.use('/api/carts', routerCart)
 router.use('/api/products', routerProduct)
 router.use('/api/session', routerSession)
 router.use('/api/users', routerUser)
-router.use('/api/chat', routerChat)
+//router.use('/api/chat', routerChat)
 router.use('/authSession', routerGithub)
 router.use('/', routerViews)
 
