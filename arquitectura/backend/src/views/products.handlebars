@@ -18,6 +18,9 @@
 				<h3 class="card-title">{{title}}</h3>
 				<div class="card-text">
 					<p>{{description}}</p>
+					{{#if thumbnails}}
+                        <img src="{{thumbnails}}" alt="Product Image">
+                    {{/if}}
 					<span>Precio: $ {{price}}</span>
 				</div>
 				<div class="card-button">

@@ -21,7 +21,7 @@ const routerProduct = Router()
 
 routerProduct.route('/')
     .get(getProducts)
-    .post(checkRole(Roles.ADMIN), addProducts)
+    .post(addProducts)
 
 
 routerProduct.route('/:pid')
