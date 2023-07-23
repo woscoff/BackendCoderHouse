@@ -11,7 +11,7 @@ export const Register = () => {
         const datosFormulario = new FormData(datForm.current) //Pasar de HTML a Objeto Iterable
         const cliente = Object.fromEntries(datosFormulario) //Pasar de objeto iterable a objeto simple
         console.log(cliente)
-        fetch('http://localhost:4000/auth/register', {
+        fetch('http://localhost:8080/auth/register', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

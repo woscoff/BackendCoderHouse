@@ -1,7 +1,7 @@
 import 'dotenv/config.js'
 import express from 'express'
 import session from 'express-session'
-import multer from 'multer'
+//import multer from 'multer'
 import cookieParser from 'cookie-parser'
 import MongoStore from 'connect-mongo'
 import passport from 'passport'
@@ -25,6 +25,11 @@ import swaggerUiExpress from 'swagger-ui-express';
 
 //const whiteList = ['http://localhost:3000'] //Rutas validas a mi servidor
 
+// const whiteList = [
+//       "http://localhost:3000",
+//       "http://localhost:8080"
+// ]
+
 // const corsOptions = { //Reviso si el cliente que intenta ingresar a mi servidor esta o no en esta lista
 //     origin: (origin, callback) => {
 //         if (whiteList.indexOf(origin) !== -1) {
@@ -35,23 +40,38 @@ import swaggerUiExpress from 'swagger-ui-express';
 //     }
 // }
 
+const whiteList = [
+  "http://localhost:3000",
+  "http://localhost:8080"
+]
+const corsOpts = {
+  origin: function (origin, callback) {
+    (whiteList.indexOf(origin) !== -1 || !origin)
+      ? callback(null, true)
+      : callback(new Error('Not allowed by CORS policy'))
+  },
+  credentials: true
+}
+
+
 const app = express()
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8080;
 
+app.use(cors(corsOpts))
 const swaggerOpts = {
-    definition: {
-      openapi: '3.0.1',
-      info: {
-        title: "Natufriend - API documentation",
-        description: "Description of the APIRest"
-      }
-    },
-    apis: [`${__dirname}/docs/**/*.yaml`]
-  }
-  const specs = swaggerJSDoc(swaggerOpts)
-  app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
+  definition: {
+    openapi: '3.0.1',
+    info: {
+      title: "Natufriend - API documentation",
+      description: "Description of the APIRest"
+    }
+  },
+  apis: [`${__dirname}/docs/**/*.yaml`]
+}
+const specs = swaggerJSDoc(swaggerOpts)
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
- 
+
 
 app.use(express.json())
 app.use(middlewareLogger)
@@ -93,23 +113,23 @@ app.use('/user', routerSession);
 //app.use('/', express.static(__dirname + '/public'))
 //app.use(errorHandler)
 
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set('views', path.resolve(__dirname, './views'))
+// app.engine('handlebars', engine());
+// app.set('view engine', 'handlebars');
+// app.set('views', path.resolve(__dirname, './views'))
 
 app.set("port", process.env.PORT)
 
 app.use('/', router)
 app.use('/', express.static(__dirname + '/public'))
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'src/public/img')
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}${file.originalname}`)
-    }
-})
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'src/public/img')
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, `${Date.now()}${file.originalname}`)
+//     }
+// })
 
 
 
@@ -117,7 +137,7 @@ const storage = multer.diskStorage({
 
 
 
-const upload = multer({ storage: storage })
+//const upload = multer({ storage: storage })
 
 
 
