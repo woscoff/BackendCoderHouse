@@ -6,7 +6,7 @@ export default function RegisterContainer() {
     return (
         <main className="d-flex justify-content-center pt-2">
             <div className="login-container justify-content-center">
-                <h2 className="text-center">Registrate</h2>
+                <h2 className="text-center">Registro de usuario</h2>
                 <RegisterForm />
             </div>
         </main>

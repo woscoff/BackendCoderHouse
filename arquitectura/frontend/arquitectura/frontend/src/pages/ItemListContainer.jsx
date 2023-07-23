@@ -46,7 +46,7 @@ const ItemListContainer = () => {
                     <h1>Todos los productos</h1>
                 ) : (
                     <h1>
-                        Viendo la categoría <b>{params.category}</b>
+                        <b>{params.category}</b>
                     </h1>
                 )}
             </div>
@@ -62,7 +62,7 @@ const ItemListContainer = () => {
                 )}
                 {!isLoading &&
                     (prods?.length === 0 ? (
-                        <p className="text-center">Por el momento no tenemos productos en esta categoria 😔</p>
+                        <p className="text-center">Por el momento no tenemos productos en esta categoria </p>
                     ) : (
                         <ItemList products={prods} />
                     ))}

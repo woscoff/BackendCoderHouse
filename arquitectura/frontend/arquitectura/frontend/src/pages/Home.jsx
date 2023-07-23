@@ -26,5 +26,10 @@ export const Home = () => {
         checkSession();
     }, []);
 
-    return <>{!userData && <LoginContainer />}</>;
+    //return <>{!userData && <LoginContainer />}</>;
+    return (
+            <div style={{ paddingBottom: '60px' }}>
+                {!userData && <LoginContainer />}
+            </div>
+    );
 };

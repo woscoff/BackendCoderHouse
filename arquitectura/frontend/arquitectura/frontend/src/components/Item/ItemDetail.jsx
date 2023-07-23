@@ -13,7 +13,7 @@ const ItemDetail = ({ item }) => {
     return (
         <Row>
             <Col className="col-md-5 text-center mt-2">
-                <img className="mw-100" src={item?.thumbnails[0]} alt={item?.title} />
+                <img width="350" height="650" src={item?.thumbnails[0]} alt={item?.title} />
             </Col>
             <Container className="mt-2 col-md-7">
                 <Col className="col-md-12">

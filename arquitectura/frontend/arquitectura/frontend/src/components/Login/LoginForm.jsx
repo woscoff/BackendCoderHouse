@@ -46,9 +46,6 @@ const LoginForm = () => {
                 </button>
                 <p className={`message-error-login text-center ${loginError ? '' : 'hidden'}`}>Usuario o contraseña incorrectos</p>
             </form>
-            <div className="d-flex justify-content-center m-1">
-                <Link to="/forgotpassword">Olvidé mi contraseña</Link>
-            </div>
         </>
     );
 };

@@ -31,7 +31,7 @@ const NavBar = () => {
                         <Nav className="justify-content-center ms-auto me-auto">
                             <Nav.Item>
                                 <Nav.Link as={Link} to="/">
-                                    <span> Home </span>
+                                    <span> Catalogo </span>
                                 </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>

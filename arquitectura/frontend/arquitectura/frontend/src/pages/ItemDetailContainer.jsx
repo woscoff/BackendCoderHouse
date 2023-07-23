@@ -33,9 +33,9 @@ const ItemDetailContainer = () => {
             {!isLoading &&
                 (!prod ? (
                     <div className="row">
-                        <h1 className="col-12">No se encontró el producto solicitado 🔍🤨</h1>
+                        <h1 className="col-12">No se encontró el producto solicitado </h1>
                         <Link className="col-12" to={'/'}>
-                            Volver al home
+                            Volver al catalogo
                         </Link>
                     </div>
                 ) : (

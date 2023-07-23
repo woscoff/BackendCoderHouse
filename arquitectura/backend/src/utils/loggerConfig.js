@@ -11,14 +11,6 @@ const levels = {
     debug: 5
 }
 
-/* const colors = {
-    fatal: 'red',
-    error: 'magenta',
-    warning: 'yellow',
-    info: 'blue',
-    http: 'green',
-    debug: 'cyan'
-}; */
 
 
 const errorTransport = new winston.transports.File({

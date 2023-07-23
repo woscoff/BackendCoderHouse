@@ -15,7 +15,7 @@ header {
 }
 
 .App {
-  background-color: ghostwhite;
+  background-color: white;
 }
 
 main {
@@ -98,7 +98,6 @@ main {
 }
 
 .qty-display {
-
   display: inline-block;
   width: 18px;
   height: 18px;
@@ -117,39 +116,12 @@ main {
   transition: all 0.3s ease-in-out;
 }
 
-.card::after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  border-radius: 5px;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-  transition: opacity 0.3s ease-in-out;
-}
-
-.card:hover {
-  transform: scale(1.1, 1.1);
-
-}
-
-.card:hover::after {
-  opacity: 1;
-}
 
 .card-img {
   object-fit: contain;
   height: 30vh;
 }
 
-
-/* footer {
-  background-color: #212529;
-  color: white;
-  bottom: 0;
-  height: 50px;
-} */
 
 
 
@@ -163,6 +135,7 @@ color: #fff;
 
 .content {
   flex: 1;
+  padding-bottom: 100px;
   /* Agrega padding o margen superior e inferior para separar el contenido del footer */
 }
 
@@ -171,11 +144,12 @@ color: #fff;
   background-color: #1a1a1a;
   padding: 20px 0;
   text-align: center;
+  position: relative;
   /* Asegura que el footer quede pegado en la parte inferior */
-  position: fixed;
+  /* position: fixed;
   bottom: 0;
   left: 0;
-  right: 0;
+  right: 0; */
 }
 
 
