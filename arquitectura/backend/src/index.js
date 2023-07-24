@@ -1,7 +1,6 @@
 import 'dotenv/config.js'
 import express from 'express'
 import session from 'express-session'
-//import multer from 'multer'
 import cookieParser from 'cookie-parser'
 import MongoStore from 'connect-mongo'
 import passport from 'passport'
@@ -22,23 +21,6 @@ import { log, middlewareLogger } from './middlewares/logger.js'
 import { Server as SocketServer } from 'socket.io'
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUiExpress from 'swagger-ui-express';
-
-//const whiteList = ['http://localhost:3000'] //Rutas validas a mi servidor
-
-// const whiteList = [
-//       "http://localhost:3000",
-//       "http://localhost:8080"
-// ]
-
-// const corsOptions = { //Reviso si el cliente que intenta ingresar a mi servidor esta o no en esta lista
-//     origin: (origin, callback) => {
-//         if (whiteList.indexOf(origin) !== -1) {
-//             callback(null, true)
-//         } else {
-//             callback(new Error('Not allowed by Cors'))
-//         }
-//     }
-// }
 
 const whiteList = [
   "http://localhost:3000",
@@ -92,17 +74,6 @@ app.use(session({
 
 
 
-
-
-// mongoose.connect(process.env.MONGODBURL)
-// .then(() => {
-//     console.log("Conectado con exito a la base de datos");
-// })
-// .catch((error) => {
-//     console.log(error);
-// })
-
-
 initializePassport()
  app.use(passport.initialize())
 app.use(passport.session()) 
@@ -154,7 +125,7 @@ export const transporter = nodemailer.createTransport({
       authMethod: 'LOGIN'
     },
     tls: {
-      rejectUnauthorized: false  //para superar la barrera de avast
+      rejectUnauthorized: false  
     }
   });
 
@@ -194,23 +165,3 @@ connectToMongoDB()
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 
-
-/* export const chatServer = new SocketServer(server)
-log('info', `Chat server online`)
-chatServer.on("connection", async (socket) => {
-  log('info', "Connection to chat detected")
-
-  socket.on("message", async (newMessage) => {
-    await createMessage([newMessage])
-    const messages = await readMessages()
-    log('info', 'New chat message received')
-    chatServer.emit("allMessages", messages)
-  })
-
-  socket.on("load messages", async () => {
-    const messages = await readMessages()
-    chatServer.emit("allMessages", messages)
-  })
-})
-
- */
